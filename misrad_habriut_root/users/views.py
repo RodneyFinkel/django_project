@@ -3,10 +3,12 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 # from django.contrib.auth.forms import UserCreationForm
-from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Message
 from django.urls import conf
+from django.db.models import Q
+from .utils import searchProfiles
 
 # Create your views here.
 
@@ -44,9 +46,22 @@ def logoutUser(request):
     return redirect('login')
 
 
-def profiles(request):
-    profiles = Profile.objects.all()
-    context = {'profiles':profiles}
+
+# SEARCH FEATURES IN: profiles(request)
+# Icontains makes sure the parameter passed is not case sensitive
+# Using filter() method instead of get() method
+# profile view is also being used for the search utility here in 
+#  profile=Profile.object.filter(name_icontains=search_query)
+# from django.db.models import Q
+# Profile.objects.filter(Q(name__icontains=search_query), 
+        # Q(short_intro__icontains=search_query))
+# Q-modules used to pass two parameters with an or value in order to have the 
+# search filter look both in the name and and short_intro fields
+# all of this has now been taken to the utiols.py file
+
+def profiles(request):    
+    profiles, search_query = searchProfiles(request)
+    context = {'profiles':profiles, 'search_query':search_query}
     return render(request, 'users/profiles.html', context)
 
 
@@ -155,6 +170,55 @@ def deleteSkill(request, pk):
    
     context = {'object': skill}
     return render(request, 'users/delete_skill.html', context)
+
+
+
+@login_required(login_url='login')
+def inbox(request):
+    profile = request.user.profile
+    messageRequests = profile.messages.all()
+    unreadCount = messageRequests.filter(is_read=False).count()
+    context = {'messageRequests': messageRequests, 'unreadCount': unreadCount}
+    return render(request, 'users/inbox.html', context)
+
+
+@login_required(login_url='login')
+def viewMessage(request, pk):
+    profile = request.user.profile
+    message = profile.messages.get(id=pk)
+    if message.is_read == False:
+        message.is_read = True
+        message.save()
+    context = {'message': message}
+    return render(request, 'users/message.html', context)
+
+
+def createMessage(request, pk):
+    recipient = Profile.objects.get(id=pk)
+    form = MessageForm()
+
+    try:
+        sender = request.user.profile
+    except:
+        sender = None
+
+    if request.method == 'POST':
+       form = MessageForm(request.POST)
+       if form.is_valid():
+        message = form.save(commit=False)
+        message.sender = sender
+        message.recipient = recipient
+
+        if sender:
+            message.name = sender.name
+            message.email = sender.email
+        message.save()
+
+        messages.success(request, 'your message was succesfully sent')
+        return redirect('user-profile', pk=recipient.id )
+    
+    context = {'recipient':recipient, 'form': form}
+    return render(request, 'users/message_form.html', context)
 
 
 

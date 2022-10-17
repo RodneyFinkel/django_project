@@ -2,18 +2,37 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Project
+from .models import Project, Tag
 from .forms import ProjectForm
 from django.contrib import messages
+from django.db.models import Q
+# from .utils import searchApps
+
 
 # Create your views here.
 # Decorators are added to restrict access to 
 # function based views if not logged in / one of djangos stronger security features
+# maybe put the internals of this view in another utils.py file...
 
 @login_required(login_url='login')
 def saas_app4(request):
-    apps = Project.objects.all()
-    context = {'apps': apps}
+    # apps, search_query = searchApps(request)
+    search_query = ''
+
+    if request.GET.get('search_query'):
+        search_query = request.GET.get('search_query')
+
+    # filtering for tags because of tags' many to many relationship with apps/projects
+    tags = Tag.objects.filter(name__icontains=search_query)
+
+    # this section is the search functionality (.filter() instead of .get())
+    apps = Project.objects.distinct().filter(
+        Q(title__icontains=search_query) |
+        Q(description__icontains=search_query) |
+        Q(owner__name__icontains=search_query) |
+        Q(tags__in=tags)
+    )
+    context = {'apps': apps, 'search_query':search_query}
     return render (request, 'saas_app4.html', context)
 
 def single_saas_app(request, pk):
