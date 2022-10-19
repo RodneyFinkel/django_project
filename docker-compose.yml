@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    command: bash -c "python misrad_habriut_root/manage.py makemigrations && python misrad_habriut_root/manage.py migrate && python misrad_habriut_root/manage.py runserver 0.0.0.0:8000"
+    container_name: music_service
+    volumes:
+      - .:/music_service
+    ports:
+      - "8000:8000"
