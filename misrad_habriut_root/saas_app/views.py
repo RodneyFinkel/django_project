@@ -85,9 +85,23 @@ def deleteProject(request, pk):
     context = {'object': project}
     return render(request, 'delete_object.html', context)
 
+
 @login_required(login_url='login')
 def admin_approval(request):
-    return render(request, 'admin_approval.html')
+    appObj = Project.objects.all()
+    if request.method == 'POST':
+        id_list = request.POST.getlist("boxes")
+        
+        appObj.update(approved=False)
+
+        for x in id_list:
+            Project.objects.filter(pk=str(x)).update(approved=True)
+
+        messages.success(request, 'Project List Approval Has Been Updated')
+        return redirect('saas_app4')
+    else:
+        return render(request, 'admin_approval.html', {'apps':appObj})
+    return render(request, 'admin_approval.html', {'apps':appObj})
 
 
 
