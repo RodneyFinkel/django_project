@@ -16,7 +16,7 @@
                     <li>
                         Title:<a href="{% url 'single_saas_app' app.id %}">{{app.title}}</a>--
                         <!-- Description:{{app.description}}  -->
-                        Date Created: {{app.created}} -- Approved: {{app.approved}}
+                        Date Created: {{app.created}}
                         <a href="{% url 'update-project' app.id %}">Edit</a>
                         <a href="{% url 'delete-object' app.id %}">Delete</a>
                     </li>   

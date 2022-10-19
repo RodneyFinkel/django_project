@@ -85,6 +85,10 @@ def deleteProject(request, pk):
     context = {'object': project}
     return render(request, 'delete_object.html', context)
 
+@login_required(login_url='login')
+def admin_approval(request):
+    return render(request, 'admin_approval.html')
+
 
 
 
