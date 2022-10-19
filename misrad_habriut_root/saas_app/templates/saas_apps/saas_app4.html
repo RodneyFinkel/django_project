@@ -12,13 +12,16 @@
             <h2>SAAS_APP4</h2>
             <ul>
                 {% for app in apps %}
+                  {% if app.approved %}
                     <li>
                         Title:<a href="{% url 'single_saas_app' app.id %}">{{app.title}}</a>--
                         <!-- Description:{{app.description}}  -->
-                        Date Created: {{app.created}}
+                        Date Created: {{app.created}} -- Approved: {{app.approved}}
                         <a href="{% url 'update-project' app.id %}">Edit</a>
                         <a href="{% url 'delete-object' app.id %}">Delete</a>
-                    </li>       
+                    </li>   
+                  
+                  {% endif %}    
                 {% endfor %}
             </ul>
             <br>
