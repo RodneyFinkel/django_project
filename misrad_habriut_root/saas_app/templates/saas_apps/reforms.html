@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<h1>REFORMS</h1>
+<button class="header__menuItem"><a href="{% url 'reform-form' %}">Add Project</a></button>
+<section class="ReformList">
+    <div class="container">
+      <div class="grid grid--three">
+          {% for reform in reforms %}
+        <div class="column">
+          <div class="card project">
+            <a href="{% url 'single_saas_app' app.id %}" class="project">
+              <img class="project__thumbnail" src="{{ app.featured_image.url }}" alt="project thumbnail" />
+              <div class="card__body">
+                <h3 class="project__title"><a href="{% url 'single_saas_app' app.id %}">{{reform.id}}</a></h3>
+                
+                <p><a class="project__author" href="{% url 'user-profile' app.owner.id %}">{{reform.reform_name}}</a></p>
+                <p class="project--rating">
+                  <span style="font-weight: bold;">Description</span> {{reform.creation_date}}
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+          {% endfor %}
+
+{% endblock content %}

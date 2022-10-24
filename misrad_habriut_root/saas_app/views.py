@@ -2,8 +2,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Project, Tag
-from .forms import ProjectForm
+from .models import Project, Tag, Reform
+from .forms import ProjectForm, ReformForm
 from django.contrib import messages
 from django.db.models import Q
 # from .utils import searchApps
@@ -35,6 +35,7 @@ def saas_app4(request):
     context = {'apps': apps, 'search_query':search_query}
     return render (request, 'saas_app4.html', context)
 
+@login_required(login_url='login')
 def single_saas_app(request, pk):
     # appObj = None
     # for i in appsList:
@@ -102,6 +103,22 @@ def admin_approval(request):
     else:
         return render(request, 'admin_approval.html', {'apps':appObj})
     return render(request, 'admin_approval.html', {'apps':appObj})
+
+@login_required(login_url='login')
+def reforms(request):
+    context = {'reforms': reforms}
+    return render (request, 'reforms.html', context)
+
+def create_reform(request):
+    form = ReformForm()       
+    if request.method == 'POST':
+        form = ReformForm(request.POST, request.FILES)
+        if form.is_valid():
+            reform = form.save(commit=False)
+            reform.save()
+            return redirect('reforms.html')
+    context = {'form': form}
+    return render(request, 'reform_form.html', context)
 
 
 

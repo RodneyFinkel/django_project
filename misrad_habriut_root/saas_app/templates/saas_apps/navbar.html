@@ -3,7 +3,7 @@
 <!-- Header Section -->
 <header class="header">
     <div class="container container--narrow">
-      <a href="{% url 'saas_app4' %}" class="header__logo">
+      <a href="{% url 'reforms' %}" class="header__logo">
         <img style="max-width: 200px;" src="{% static 'images/Deloitte.svg' %}"></a>
 
       <!-- <a href="{% url 'profiles' %}" class="header__logo">
@@ -18,20 +18,12 @@
           <div class="toggle-menu__lines"></div>
         </label>
         <ul class="header__menu">
-          
-          <li class="header__menuItem"><a href="{% url 'profiles' %}">Ministries</a></li>
-          <li class="header__menuItem"><a href="{% url 'saas_app4' %}">Projects</a></li>          
-          
-          {% if request.user.is_authenticated %} 
-          <li class="header__menuItem"><a href="{% url 'inbox' %}">Inbox</a></li>
-          <li class="header__menuItem"><a href="{% url 'account' %}">Account</a></li>
-          <li class="header__menuItem"><a href="{% url 'admin-approval' %}">Admin</a></li> 
-          <li class="header__menuItem"><a href="{% url 'create-project' %}">Add Project</a></li> 
-          <li class="header__menuItem"><a href="">Logged in as: {{profile.name}}</a></li>       
+        {% if request.user.is_authenticated %}  
+          <li class="header__menuItem"><a href="{% url 'reforms' %}">Reforms</a></li>  
+          <li class="header__menuItem"><a href="">Logged in as: {{user.username}}</a></li>          
           <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Logout</a></li>
-          {% else %}
-          <li class="header__menuItem"><a href="{% url 'login' %}" class="btn btn--sub">Login/Sign Up</a></li>
-          {% endif %}
+
+        {% endif %}
         </ul>
       </nav>
     </div>

@@ -1,6 +1,28 @@
 {% extends 'main.html' %}
 {% block content %}
 
+
+<main class="projects">
+  <section class="hero-section text-center">
+    <div class="container container--narrow">
+      <div class="hero-section__box">
+        <h2>Search for <span>Reform</span></h2>
+      </div>
+
+      <div class="hero-section__search">
+        <form class="form" action="{% url 'saas_app4' %}" method="get">
+          <div class="form__field">
+            <label for="formInput#search">Search By Reform </label>
+            <input class="input input--text" id="formInput#search" type="text" name="search_query"
+              placeholder="Search by Project Title" value="{{search_query}}" />
+          </div>
+
+          <input class="btn btn--sub btn--md" type="submit" value="Search" />
+        </form>
+      </div>
+    </div>
+  </section>
+
 <div class="container text-center">
     <div class="row">
         
@@ -8,8 +30,8 @@
    
         </div>
         <div class="col-6">
-            
-            <h2>SAAS_APP4</h2>
+          {% if request.user.is_authenticated %}  
+            <h2>REFORMS</h2>
             <ul>
                 {% for app in apps %}
                   {% if app.approved %}
@@ -19,13 +41,12 @@
                         Date Created: {{app.created}}
                         <a href="{% url 'update-project' app.id %}">Edit</a>
                         <a href="{% url 'delete-object' app.id %}">Delete</a>
-                    </li>   
-                  
+                    </li>    
                   {% endif %}    
                 {% endfor %}
             </ul>
             <br>
-            
+          {% endif %} 
         </div>
         <div class="col">
             
@@ -38,63 +59,6 @@
             
     </div>
   </div>
-   
-<!-- Main Section -->
-    <main class="projects">
-        <section class="hero-section text-center">
-          <div class="container container--narrow">
-            <div class="hero-section__box">
-              <h2>Search for <span>Projects</span></h2>
-            </div>
-    
-            <div class="hero-section__search">
-              <form class="form" action="{% url 'saas_app4' %}" method="get">
-                <div class="form__field">
-                  <label for="formInput#search">Search By Projects </label>
-                  <input class="input input--text" id="formInput#search" type="text" name="search_query"
-                    placeholder="Search by Project Title" value="{{search_query}}" />
-                </div>
-    
-                <input class="btn btn--sub btn--md" type="submit" value="Search" />
-              </form>
-            </div>
-          </div>
-        </section>
-
-        <!-- Search Result: DevList -->
-        <section class="projectsList">
-          <div class="container">
-            <div class="grid grid--three">
-                {% for app in apps %}
-              <div class="column">
-                <div class="card project">
-                  <a href="{% url 'single_saas_app' app.id %}" class="project">
-                    <img class="project__thumbnail" src="{{ app.featured_image.url }}" alt="project thumbnail" />
-                    <div class="card__body">
-                      <h3 class="project__title"><a href="{% url 'single_saas_app' app.id %}">{{app.title}}</a></h3>
-                      
-                      <p><a class="project__author" href="{% url 'user-profile' app.owner.id %}">By {{app.owner.name}}</a></p>
-                      <p class="project--rating">
-                        <span style="font-weight: bold;">Description</span> {{app.description}}
-                      </p>
-                      <div class="project__tags">
-                        {% for tag in app.tags.all %}
-                        <span class="tag tag--pill tag--main">
-                          <small>{{tag}}</small>
-                        </span>
-                        {% endfor %}
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-                {% endfor %}
-              
-    
-            </div>
-          </div>
-        </section>
-    
         
       </main>
 {% endblock content %}

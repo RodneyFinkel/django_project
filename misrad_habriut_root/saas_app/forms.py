@@ -1,11 +1,19 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Project
+from .models import Project, Reform
 
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
         fields = ['title', 'featured_image', 'description', 'demo_link', 'source_link', 'tags']
+        widgets = {
+            'tags':forms.CheckboxSelectMultiple(),
+        }
+
+class ReformForm(ModelForm):
+    class Meta:
+        model = Reform
+        fields = ['reform_name']
         widgets = {
             'tags':forms.CheckboxSelectMultiple(),
         }

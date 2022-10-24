@@ -59,12 +59,13 @@ def logoutUser(request):
 # search filter look both in the name and and short_intro fields
 # all of this has now been taken to the utiols.py file
 
+@login_required(login_url='login')
 def profiles(request):    
     profiles, search_query = searchProfiles(request)
     context = {'profiles':profiles, 'search_query':search_query}
     return render(request, 'users/profiles.html', context)
 
-
+@login_required(login_url='login')
 def userProfile(request, pk):
     profile = Profile.objects.get(id=pk)
 
@@ -74,7 +75,7 @@ def userProfile(request, pk):
     context = {'profile': profile, 'topSkills': topSkills, 'otherSkills': otherSkills}
     return render(request, 'users/user-profile.html', context)
 
-
+@login_required(login_url='login')
 def registerUser(request):
     page = 'register'
     form = CustomUserCreationForm()

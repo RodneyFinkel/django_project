@@ -13,6 +13,8 @@ urlpatterns = [
     path('single_saas_app/<str:pk>/', views.single_saas_app, name='single_saas_app'),
     path('delete-object/<str:pk>)/', views.deleteProject, name='delete-object'),
     path('admin-approval/', views.admin_approval, name='admin-approval'),
+    path('reforms/', views.reforms, name='reforms'),
+    path('reform_form/', views.create_reform, name='reform_form'),
 ]
 
 # '' : empty string and /

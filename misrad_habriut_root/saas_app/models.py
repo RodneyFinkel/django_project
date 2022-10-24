@@ -21,6 +21,13 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
+class Reform(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    reform_name = models.CharField(max_length=2000, null=False, blank=False)
+    creation_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.reform_name
 
 class Review(models.Model):
     VOTE_TYPE = (
