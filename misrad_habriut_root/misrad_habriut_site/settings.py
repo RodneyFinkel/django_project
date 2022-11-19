@@ -37,6 +37,7 @@ INSTALLED_APPS = [
 
     'saas_app',
     'users.apps.UsersConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
