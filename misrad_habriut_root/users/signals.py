@@ -4,6 +4,8 @@ import uuid
 from .models import Profile
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from django.core.mail import send_mail
+from django.conf import settings
 
 @receiver(post_save, sender=User)
 def createProfile(sender, instance, created, **kwargs):
@@ -14,6 +16,17 @@ def createProfile(sender, instance, created, **kwargs):
             username = user.username,
             email = user.email,
             name = user.first_name
+        )
+
+        subject = 'Welcome to Deloitte_CRUD'
+        message = 'The crudiest CRUD is a plaform for multiple CRUD apps using mongoDB'
+
+        send_mail(
+            subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [profile.email],
+            fail_silently=False,
         )
 
 @receiver(post_save, sender=Profile)
@@ -30,12 +43,6 @@ def updateUser(sender, instance, created, **kwargs):
 def deleteUser(sender, instance, **kwargs):
     user = instance.user
     user.delete()
-
-
-
-    
-
-
 
 
 

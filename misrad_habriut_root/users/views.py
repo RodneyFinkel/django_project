@@ -57,7 +57,7 @@ def logoutUser(request):
         # Q(short_intro__icontains=search_query))
 # Q-modules used to pass two parameters with an or value in order to have the 
 # search filter look both in the name and and short_intro fields
-# all of this has now been taken to the utiols.py file
+# all of this has now been taken to the utils.py file
 
 def profiles(request):    
     profiles, search_query = searchProfiles(request)
