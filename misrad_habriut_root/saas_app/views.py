@@ -3,16 +3,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Project, Tag
-from .forms import ProjectForm
+from .forms import ProjectForm, ReviewForm
 from django.contrib import messages
 from django.db.models import Q
+from django.contrib import messages
 # from .utils import searchApps
 
 
-# Create your views here.
-# Decorators are added to restrict access to 
-# function based views if not logged in / one of djangos stronger security features
-# maybe put the internals of this view in another utils.py file...
 
 @login_required(login_url='login')
 def saas_app4(request):
@@ -41,7 +38,18 @@ def single_saas_app(request, pk):
     #     if i['id'] == pk:
     #         appObj = i
     appObj = Project.objects.get(id=pk)
-    return render(request, 'single_saas_app.html', {'app':appObj})
+    form = ReviewForm()
+    if request.method == 'POST':
+      form = ReviewForm(request.POST)  
+      review = form.save(commit=False)
+      review.project = appObj
+      review.owner = request.user.profile
+      review.save()
+      appObj.getVoteCount
+      messages.success(request, 'Your review was succesfully submitted')
+      return redirect('single_saas_app', pk=appObj.id)
+
+    return render(request, 'single_saas_app.html', {'app':appObj, 'form':form})
 
 
 @login_required(login_url='login')
