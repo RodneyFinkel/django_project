@@ -21,7 +21,7 @@ form.addEventListener('submit', (e) => {
         console.log('DATA:', data.access)
         if (data.access){
             localStorage.setItem('token', data.access)
-            window.location = 'file:///C:/Users/rfinkel/Desktop/Frontend/projects-list.html'
+            window.location = 'file://Users/rodneyfinkel/Documents/Documents - Rodney’s MacBook Pro - 1/GitHub 19.43.21/django_project/Frontend/projects-list.html'
         }else{
             alert('Username OR password not correct')
         }

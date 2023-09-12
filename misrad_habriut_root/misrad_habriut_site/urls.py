@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('saas_app4/', include('saas_app.urls')),
     path('', include('users.urls')),
-    path('api/', include('api.urls')),
+    path('api/', include('api.urls')), #this lets the app know where the api url's are located
 
 
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name='reset_password.html'), 

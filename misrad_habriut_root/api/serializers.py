@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from saas_app.models import Project, Tag, Review
+from saas_app.models import Project, Tag, Review   #importing the projects (saas_app is a legacy project name from deloitte)
 from users.models import Profile
 
 #this class serializes the Project model so that it can be returned as JSON

@@ -3,16 +3,16 @@ let logoutBtn = document.getElementById('logout-btn')
 
 let token = localStorage.getItem('token')
 
-// if (token){
-//     loginBtn.remove()
-// } else {
-//     logoutBtn.remove()
-// }
+if (token){
+    loginBtn.remove()
+} else {
+    logoutBtn.remove()
+}
 
 logoutBtn.addEventListener('click', (e) => {
     e.preventDefault()
     localStorage.removeItem('token')
-    window.location = 'file:///C:/Users/rfinkel/Desktop/Frontend/login.html'
+    window.location = 'file:///Users/rodneyfinkel/Documents/Documents - Rodney’s MacBook Pro - 1/GitHub 19.43.21/django_project/Frontend/login.html'
 })
 
 
@@ -51,10 +51,10 @@ for (let i=0; projects.length > i; i++){
     projectsWrapper.innerHTML += projectCard
     }
 
-    addVoteEvents()
-
-    //Add event listener
+    addVoteEvents()   
 }
+
+//Add event listener
 
 let addVoteEvents = () => {
     let voteBtns = document.getElementsByClassName('vote--option')
