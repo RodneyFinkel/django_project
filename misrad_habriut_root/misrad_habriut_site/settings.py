@@ -146,7 +146,7 @@ WSGI_APPLICATION = 'misrad_habriut_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'deloitte_search',
+        'NAME': 'devsearch_db',
         'USER': 'postgres',
         'PASSWORD': 'globular',
         'HOST': 'localhost',

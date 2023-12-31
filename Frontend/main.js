@@ -25,7 +25,7 @@ let getProjects = () => {
 
         console.log(data)
         buildProjects(data)
-    
+       
    })
 }
 
