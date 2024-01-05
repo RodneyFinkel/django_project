@@ -149,7 +149,7 @@ DATABASES = {
         'NAME': 'devsearch_db',
         'USER': 'postgres',
         'PASSWORD': 'globular',
-        'HOST': 'localhost',
+        'HOST': 'db',  # USE 'LOCALHOST' WHEN RUNNING ON LOCAL SERVER  
         'PORT': '5432',
     }
 }
