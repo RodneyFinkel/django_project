@@ -90,7 +90,7 @@
 
 
 
-
+//  Addded wrapper around the entire script to load the DOM initially
 
 document.addEventListener('DOMContentLoaded', function() {
     let loginBtn = document.getElementById('login-btn');
