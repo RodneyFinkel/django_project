@@ -15,6 +15,8 @@ services:
   db:
     image: postgres
     environment:
+      POSTGRES_DB: devsearch_db
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: globular
     
     volumes:
