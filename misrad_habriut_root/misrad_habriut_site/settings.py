@@ -149,7 +149,7 @@ DATABASES = {
         'NAME': 'devsearch_db',
         'USER': 'postgres',
         'PASSWORD': 'globular',
-        'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
