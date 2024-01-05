@@ -17,3 +17,6 @@ ADD . /django_devsearch_app/
 
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
+
+# Load data dump from local environment
+COPY dump.sql /docker-entrypoint-initdb.d/
